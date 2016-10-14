@@ -17,8 +17,8 @@ public extension PubNub {
         return configuration.uuid
     }
     
-    func getUserName(onSuccess:@escaping (String) -> ()) {
-        self.stateForUUID(self.getUUID(), onChannel: "cycling", withCompletion:{
+    func getUserNameForUUID(uuid:String, onSuccess:@escaping (String) -> ()) {
+        self.stateForUUID(uuid, onChannel: "cycling", withCompletion:{
             (result, status) in
             
             if status == nil {
@@ -32,6 +32,35 @@ public extension PubNub {
                     }
                 }
                 
+            }
+            else{
+                
+                /**
+                 Handle client state audit error. Check 'category' property
+                 to find out possible reason because of which request did fail.
+                 Review 'errorData' property (which has PNErrorData data type) of status
+                 object to get additional information about issue.
+                 
+                 Request can be resent using: status.retry()
+                 */
+            }
+        })
+    }
+
+    
+    func getUserName(onSuccess:@escaping (String) -> ()) {
+        self.stateForUUID(self.getUUID(), onChannel: "cycling", withCompletion:{
+            (result, status) in
+            
+            if status == nil {
+                // Handle downloaded state information using: result.data.state
+                print("result: \(result?.data.state)")
+                if let resultDictionary = result?.data.state {
+                    if let userName = resultDictionary[Constants.PubNubKeys.UserName] as? String {
+                        onSuccess(userName)
+                        //return userName
+                    }
+                }
             }
             else{
                 

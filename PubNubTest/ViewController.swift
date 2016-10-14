@@ -16,7 +16,7 @@ class ViewController: UIViewController, PNObjectEventListener {
     var outDateFormatter : DateFormatter = DateFormatter()
     var currentChannel : String = "cycling"
     var firstPost : Bool = true
-//    var userDictionary : NSDictionary = NSDictionary()
+    var userList : UserList?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +24,9 @@ class ViewController: UIViewController, PNObjectEventListener {
         self.appDelegate!.client.addListener(self)
         outDateFormatter.dateStyle = .short
         outDateFormatter.timeStyle = .medium
+        if (userList == nil) {
+            userList = UserList(client: appDelegate!.client)
+        }
         appDelegate!.client.getUserName(onSuccess: {userName in
             self.title = userName
             print("Hello, \(userName)")
@@ -81,18 +84,23 @@ class ViewController: UIViewController, PNObjectEventListener {
         }
         if let messageData = message.data.message {
             var postDateStr: String = ""
+            let uuid = message.uuid
+            var userName : String = ""
+            if let userNameFromId = userList?.getUserNameByUUID(uuid: uuid) {
+                userName = userNameFromId
+            }
             if let timeToken : Double = message.data.timetoken as Double? {
                 let timeSince1970 = timeToken / 10000000
                 let timeInterval : TimeInterval = TimeInterval(timeSince1970)
                 let postDate = Date(timeIntervalSince1970: timeInterval)
                 postDateStr = outDateFormatter.string(from: postDate)
             }
-            var newMessage : String = postDateStr + "\n" + String(describing:messageData)
+            let newMessage : String = userName + " at " + postDateStr + " said:\n" + String(describing:messageData)
             if (!firstPost) {
                 self.conversationView.text = self.conversationView.text + "\n"
             }
             self.conversationView.text = self.conversationView.text + newMessage
-            
+            firstPost = false
             print("Received message: \(newMessage) on channel '\(message.data.channel)' " +
                 "at \(postDateStr)")
         }
@@ -112,16 +120,23 @@ class ViewController: UIViewController, PNObjectEventListener {
         }
         
         if event.data.presenceEvent != "state-change" {
-            
+            if (event.data.presenceEvent == "join") {
+                if let uuid = event.data.presence.uuid {
+                    userList?.addUserByUUID(uuid: uuid)
+                }
+            }
             print("\(event.data.presence.uuid) \"\(event.data.presenceEvent)'ed\"\n" +
                 "at: \(event.data.presence.timetoken) on \(event.data.channel) " +
                 "(Occupancy: \(event.data.presence.occupancy))");
         }
-        else {
+        else {  // This is a state change
             
             print("\(event.data.presence.uuid) changed state at: " +
                 "\(event.data.presence.timetoken) on \(event.data.channel) to:\n" +
                 "\(event.data.presence.state)");
+            if let uuid = event.data.presence.uuid {
+                userList?.addUserByUUID(uuid: uuid)
+            }
         }
     }
 
