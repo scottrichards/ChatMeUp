@@ -13,6 +13,9 @@
 		017127971DB02EAF00F1B6B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 017127961DB02EAF00F1B6B2 /* Assets.xcassets */; };
 		0171279A1DB02EAF00F1B6B2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 017127981DB02EAF00F1B6B2 /* LaunchScreen.storyboard */; };
 		017127A51DB02EAF00F1B6B2 /* PubNubTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017127A41DB02EAF00F1B6B2 /* PubNubTestTests.swift */; };
+		01FFDE291DB06C480028C3BC /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FFDE281DB06C480028C3BC /* SettingsController.swift */; };
+		01FFDE2D1DB0843A0028C3BC /* PubNubExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FFDE2C1DB0843A0028C3BC /* PubNubExtension.swift */; };
+		01FFDE2F1DB088D50028C3BC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FFDE2E1DB088D50028C3BC /* Constants.swift */; };
 		05654D55FA53BD8A39C78B0D /* Pods_PubNubTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3442090B9EB6546A9B424F5 /* Pods_PubNubTest.framework */; };
 		4FC0BC028CD80B9709402A59 /* Pods_PubNubTestTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C46398E44EBE40AE38462C4A /* Pods_PubNubTestTests.framework */; };
 /* End PBXBuildFile section */
@@ -39,6 +42,9 @@
 		017127A41DB02EAF00F1B6B2 /* PubNubTestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PubNubTestTests.swift; sourceTree = "<group>"; };
 		017127A61DB02EAF00F1B6B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		01770988C0F1C5A4F81410F7 /* Pods-PubNubTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PubNubTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-PubNubTest/Pods-PubNubTest.release.xcconfig"; sourceTree = "<group>"; };
+		01FFDE281DB06C480028C3BC /* SettingsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
+		01FFDE2C1DB0843A0028C3BC /* PubNubExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PubNubExtension.swift; sourceTree = "<group>"; };
+		01FFDE2E1DB088D50028C3BC /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		128C3CCFD62ABA6A0DF1E954 /* Pods-PubNubTestTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PubNubTestTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PubNubTestTests/Pods-PubNubTestTests.debug.xcconfig"; sourceTree = "<group>"; };
 		8DB24BC58203013B2D937A87 /* Pods-PubNubTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PubNubTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PubNubTest/Pods-PubNubTest.debug.xcconfig"; sourceTree = "<group>"; };
 		AB41A0FC563D8A1EB0E145DE /* Pods-PubNubTestTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PubNubTestTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PubNubTestTests/Pods-PubNubTestTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -95,6 +101,9 @@
 				017127961DB02EAF00F1B6B2 /* Assets.xcassets */,
 				017127981DB02EAF00F1B6B2 /* LaunchScreen.storyboard */,
 				0171279B1DB02EAF00F1B6B2 /* Info.plist */,
+				01FFDE281DB06C480028C3BC /* SettingsController.swift */,
+				01FFDE2C1DB0843A0028C3BC /* PubNubExtension.swift */,
+				01FFDE2E1DB088D50028C3BC /* Constants.swift */,
 			);
 			path = PubNubTest;
 			sourceTree = "<group>";
@@ -332,8 +341,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01FFDE2D1DB0843A0028C3BC /* PubNubExtension.swift in Sources */,
+				01FFDE291DB06C480028C3BC /* SettingsController.swift in Sources */,
 				017127921DB02EAF00F1B6B2 /* ViewController.swift in Sources */,
 				017127901DB02EAF00F1B6B2 /* AppDelegate.swift in Sources */,
+				01FFDE2F1DB088D50028C3BC /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

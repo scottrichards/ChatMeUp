@@ -83,7 +83,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Uyk-XL-tzn">
-                        <barButtonItem key="rightBarButtonItem" title="Settings" id="1gM-Df-6dT"/>
+                        <barButtonItem key="rightBarButtonItem" title="Settings" id="1gM-Df-6dT">
+                            <connections>
+                                <segue destination="FjP-qv-Guv" kind="show" id="bS8-jG-ZLV"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="conversationView" destination="ty8-TC-U4s" id="1xU-zf-uCU"/>
@@ -93,6 +97,51 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1056.8" y="123.68815592203899"/>
+        </scene>
+        <!--Settings Controller-->
+        <scene sceneID="28H-4q-4M3">
+            <objects>
+                <viewController id="FjP-qv-Guv" customClass="SettingsController" customModule="PubNubTest" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="YJ9-0M-giW"/>
+                        <viewControllerLayoutGuide type="bottom" id="2E3-A7-bhX"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8ZB-VX-pAl">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Username:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="41g-Wm-jUc">
+                                <frame key="frameInset" minX="16" minY="82" width="84" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="G3F-Xe-Tpp">
+                                <frame key="frameInset" minX="108" minY="77" width="251" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WiA-MH-Sb7">
+                                <frame key="frameInset" minX="155" minY="132" width="65" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Update"/>
+                                <connections>
+                                    <action selector="updateSettings:" destination="FjP-qv-Guv" eventType="touchUpInside" id="E6t-BX-WG1"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="userNameField" destination="G3F-Xe-Tpp" id="fSB-ZZ-g2U"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HVL-Zf-dsk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1813.5999999999999" y="123.68815592203899"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gWa-9L-kOO">
