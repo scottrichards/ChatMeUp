@@ -59,6 +59,8 @@ public extension PubNub {
                     if let userName = resultDictionary[Constants.PubNubKeys.UserName] as? String {
                         onSuccess(userName)
                         //return userName
+                    } else {
+                        onError()
                     }
                 } else {
                     onError()
