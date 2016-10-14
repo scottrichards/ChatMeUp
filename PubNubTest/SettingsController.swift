@@ -36,31 +36,7 @@ class SettingsController: UIViewController, PNObjectEventListener {
     }
     
     func updateUserName(userName:String) {
-//        let userNameState = ["userName" : userName]
-//        let configuration = self.appDelegate!.client.currentConfiguration()
-        
         self.appDelegate!.client.setUserName(userName: userName)
-        
-//        self.appDelegate!.client.setState(userNameState, forUUID: configuration.uuid, onChannel: "cycling", withCompletion:{
-//            (status) in
-//            
-//            if !status.isError {
-//                print("success setting user name")
-//                // Client state successfully modified on specified channel.
-//            }
-//            else {
-//                print("ERROR: setting user name")
-//                /**
-//                 Handle client state modification error. Check 'category' property
-//                 to find out possible reason because of which request did fail.
-//                 Review 'errorData' property (which has PNErrorData data type) of status
-//                 object to get additional information about issue.
-//                 
-//                 Request can be resent using: status.retry()
-//                 */
-//            }
-//        
-//        })
     }
 
     /*

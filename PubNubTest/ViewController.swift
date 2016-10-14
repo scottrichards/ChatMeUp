@@ -16,6 +16,7 @@ class ViewController: UIViewController, PNObjectEventListener {
     var outDateFormatter : DateFormatter = DateFormatter()
     var currentChannel : String = "cycling"
     var firstPost : Bool = true
+//    var userDictionary : NSDictionary = NSDictionary()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +24,10 @@ class ViewController: UIViewController, PNObjectEventListener {
         self.appDelegate!.client.addListener(self)
         outDateFormatter.dateStyle = .short
         outDateFormatter.timeStyle = .medium
-
+        appDelegate!.client.getUserName(onSuccess: {userName in
+            self.title = userName
+            print("Hello, \(userName)")
+        })
         // Do any additional setup after loading the view, typically from a nib.
     }
 

@@ -17,9 +17,7 @@ public extension PubNub {
         return configuration.uuid
     }
     
-    func getUserName(onSuccess:@escaping (String) -> ()) -> String? {
-//        let configuration = self.currentConfiguration()
-        var userName : String?
+    func getUserName(onSuccess:@escaping (String) -> ()) {
         self.stateForUUID(self.getUUID(), onChannel: "cycling", withCompletion:{
             (result, status) in
             
@@ -47,7 +45,6 @@ public extension PubNub {
                  */
             }
         })
-        return userName
     }
     
     func setUserName(userName:String) {
@@ -75,4 +72,6 @@ public extension PubNub {
             
         })
     }
+    
+    
 }

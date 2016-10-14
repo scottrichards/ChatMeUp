@@ -14,6 +14,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
 
     var window: UIWindow?
 
+    var appState : AppState = AppState()
+    
     // Stores reference on PubNub client to make sure what it won't be released.
     var client: PubNub!
     
