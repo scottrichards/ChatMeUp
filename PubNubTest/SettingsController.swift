@@ -20,7 +20,9 @@ class SettingsController: UIViewController, PNObjectEventListener {
         self.appDelegate!.client.addListener(self)
         self.appDelegate!.client.getUserName( onSuccess: { userName in
             self.userNameField.text = userName
-        })
+            self.userNameField.resignFirstResponder()
+            }, onError: {}
+        )
     }
 
     override func didReceiveMemoryWarning() {
@@ -36,7 +38,10 @@ class SettingsController: UIViewController, PNObjectEventListener {
     }
     
     func updateUserName(userName:String) {
-        self.appDelegate!.client.setUserName(userName: userName)
+        self.appDelegate!.client.setUserName(userName: userName, onSuccess: {
+            self.userNameField.resignFirstResponder()
+            self.navigationController?.popViewController(animated: true)
+        })
     }
 
     /*

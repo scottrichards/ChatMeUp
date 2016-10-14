@@ -48,7 +48,7 @@ public extension PubNub {
     }
 
     
-    func getUserName(onSuccess:@escaping (String) -> ()) {
+    func getUserName(onSuccess:@escaping (String) -> (), onError:@escaping () -> ()) {
         self.stateForUUID(self.getUUID(), onChannel: "cycling", withCompletion:{
             (result, status) in
             
@@ -60,10 +60,12 @@ public extension PubNub {
                         onSuccess(userName)
                         //return userName
                     }
+                } else {
+                    onError()
                 }
             }
             else{
-                
+                onError()
                 /**
                  Handle client state audit error. Check 'category' property
                  to find out possible reason because of which request did fail.
@@ -76,7 +78,7 @@ public extension PubNub {
         })
     }
     
-    func setUserName(userName:String) {
+    func setUserName(userName:String, onSuccess:@escaping () -> ()) {
         let userNameState = [Constants.PubNubKeys.UserName : userName]
         let configuration = self.currentConfiguration()
         
@@ -85,6 +87,7 @@ public extension PubNub {
             
             if !status.isError {
                 print("success setting user name")
+                onSuccess()
                 // Client state successfully modified on specified channel.
             }
             else {

@@ -20,7 +20,7 @@ class UserList: NSObject {
     func addUserByUUID(uuid:String) {
         pubNubClient.getUserName(onSuccess: {userName in
             self.users[uuid] = userName
-        })
+            }, onError: {})
     }
     
     func getUserNameByUUID(uuid:String) -> String {

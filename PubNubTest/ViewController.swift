@@ -12,11 +12,13 @@ import PubNub
 class ViewController: UIViewController, PNObjectEventListener {
     @IBOutlet weak var conversationView: UITextView!
     @IBOutlet weak var messageField: UITextField!
+    @IBOutlet weak var helloUserName: UILabel!
     var appDelegate : AppDelegate?
     var outDateFormatter : DateFormatter = DateFormatter()
     var currentChannel : String = "cycling"
     var firstPost : Bool = true
     var userList : UserList?
+    var currentUserName : String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,11 +29,26 @@ class ViewController: UIViewController, PNObjectEventListener {
         if (userList == nil) {
             userList = UserList(client: appDelegate!.client)
         }
-        appDelegate!.client.getUserName(onSuccess: {userName in
-            self.title = userName
-            print("Hello, \(userName)")
-        })
+        
         // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        appDelegate!.client.getUserName(
+            onSuccess: {userName in
+                self.title = userName
+                if (userName.isEmpty) {
+                    self.performSegue(withIdentifier: "userSettings", sender: self)
+                } else {
+                    self.helloUserName.text = "Hello, \(userName)"
+                    print("Hello, \(userName)")
+                }
+            }, onError: {
+                self.helloUserName.text = "LogIn"
+                self.performSegue(withIdentifier: "userSettings", sender: self)
+            }
+        )
     }
 
     override func didReceiveMemoryWarning() {
@@ -120,7 +137,7 @@ class ViewController: UIViewController, PNObjectEventListener {
         }
         
         if event.data.presenceEvent != "state-change" {
-            if (event.data.presenceEvent == "join") {
+            if (event.data.presenceEvent == "join") {   // if user joined then add user id
                 if let uuid = event.data.presence.uuid {
                     userList?.addUserByUUID(uuid: uuid)
                 }

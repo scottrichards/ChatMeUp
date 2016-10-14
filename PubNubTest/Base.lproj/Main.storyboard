@@ -37,20 +37,8 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Message" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MyG-cg-9UC">
                                 <frame key="frameInset" minX="13" minY="588" width="69" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Room:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L4i-c8-VFS">
-                                <frame key="frameInset" minX="16" minY="83" width="49" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="luI-VZ-aVt">
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ty8-TC-U4s">
@@ -58,10 +46,22 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Conversation" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XQ4-Ne-Pev">
-                                <frame key="frameInset" minX="16" minY="112" width="101" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Room:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L4i-c8-VFS">
+                                <frame key="frameInset" minX="16" minY="112" width="49" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9G5-uA-U8g">
+                                <frame key="frameInset" minX="73" minY="108" width="262" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oeq-it-Jjg">
+                                <frame key="frameInset" minX="16" minY="83" width="340" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -75,22 +75,20 @@
                             <constraint firstItem="ty8-TC-U4s" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Ygq-uM-bbW"/>
                             <constraint firstAttribute="trailingMargin" secondItem="cWY-44-53z" secondAttribute="trailing" constant="3" id="atU-Xh-ARB"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ty8-TC-U4s" secondAttribute="bottom" constant="103" id="dWU-Ma-Lwh"/>
-                            <constraint firstItem="luI-VZ-aVt" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="19" id="dnh-Zq-c9a"/>
                             <constraint firstItem="ty8-TC-U4s" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="84" id="lpT-hM-BnF"/>
-                            <constraint firstItem="luI-VZ-aVt" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="65" id="qB2-6S-3FV"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="luI-VZ-aVt" secondAttribute="trailing" constant="6" id="qq8-bQ-RR6"/>
                             <constraint firstItem="ty8-TC-U4s" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="wTf-vA-HiH"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Uyk-XL-tzn">
                         <barButtonItem key="rightBarButtonItem" title="Settings" id="1gM-Df-6dT">
                             <connections>
-                                <segue destination="FjP-qv-Guv" kind="show" id="bS8-jG-ZLV"/>
+                                <segue destination="FjP-qv-Guv" kind="show" identifier="userSettings" id="bS8-jG-ZLV"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="conversationView" destination="ty8-TC-U4s" id="1xU-zf-uCU"/>
+                        <outlet property="helloUserName" destination="oeq-it-Jjg" id="MoX-RI-Ovj"/>
                         <outlet property="messageField" destination="P62-5q-AR3" id="8Lt-M7-Xbv"/>
                     </connections>
                 </viewController>
@@ -98,10 +96,10 @@
             </objects>
             <point key="canvasLocation" x="1056.8" y="123.68815592203899"/>
         </scene>
-        <!--Settings Controller-->
+        <!--User Settings-->
         <scene sceneID="28H-4q-4M3">
             <objects>
-                <viewController id="FjP-qv-Guv" customClass="SettingsController" customModule="PubNubTest" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="User Settings" id="FjP-qv-Guv" customClass="SettingsController" customModule="PubNubTest" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="YJ9-0M-giW"/>
                         <viewControllerLayoutGuide type="bottom" id="2E3-A7-bhX"/>
