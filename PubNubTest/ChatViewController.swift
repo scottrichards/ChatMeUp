@@ -9,10 +9,10 @@
 import UIKit
 import PubNub
 
-class ViewController: UIViewController, PNObjectEventListener {
+class ChatViewController: UIViewController, PNObjectEventListener {
     @IBOutlet weak var conversationView: UITextView!
     @IBOutlet weak var messageField: UITextField!
-    @IBOutlet weak var helloUserName: UILabel!
+    @IBOutlet weak var userNameButton: UIButton!
     var appDelegate : AppDelegate?
     var outDateFormatter : DateFormatter = DateFormatter()
     var currentChannel : String = "cycling"
@@ -41,11 +41,11 @@ class ViewController: UIViewController, PNObjectEventListener {
                 if (userName.isEmpty) {
                     self.performSegue(withIdentifier: "userSettings", sender: self)
                 } else {
-                    self.helloUserName.text = "Hello, \(userName)"
+                    self.userNameButton.setTitle(userName, for: .normal)
                     print("Hello, \(userName)")
                 }
             }, onError: {
-                self.helloUserName.text = "LogIn"
+                self.userNameButton.setTitle("Log In...", for: .normal)
                 self.performSegue(withIdentifier: "userSettings", sender: self)
             }
         )
