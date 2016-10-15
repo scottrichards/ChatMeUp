@@ -9,7 +9,7 @@
 import UIKit
 import PubNub
 
-class ChatViewController: UIViewController, PNObjectEventListener {
+class ChatViewController: UIViewController, PNObjectEventListener, UITextFieldDelegate {
     @IBOutlet weak var conversationView: UITextView!
     @IBOutlet weak var messageField: UITextField!
     @IBOutlet weak var userNameButton: UIButton!
@@ -18,7 +18,6 @@ class ChatViewController: UIViewController, PNObjectEventListener {
     var currentChannel : String = "cycling"
     var firstPost : Bool = true
     var userList : UserList?
-    var currentUserName : String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,10 +64,13 @@ class ChatViewController: UIViewController, PNObjectEventListener {
     func postMessage(message:String) {
         // Select last object from list of channels and send message to it.
         let targetChannel = appDelegate!.client.channels().last!
-        appDelegate!.client.publish(message, toChannel: targetChannel,
+        var messageDictionary = [Constants.PubNubKeys.Contents : message]
+        messageDictionary[Constants.PubNubKeys.UserName] = appDelegate?.appState.currentUserName
+        appDelegate!.client.publish(messageDictionary, toChannel: targetChannel,
                                     compressed: false, withCompletion: { (publishStatus) -> Void in
                                         
                                         if !publishStatus.isError {
+                                            
                                             self.messageField.text = ""
                                             // Message successfully published to specified channel.
                                         }
@@ -89,7 +91,7 @@ class ChatViewController: UIViewController, PNObjectEventListener {
 
     // Handle new message from one of channels on which client has been subscribed.
     func client(_ client: PubNub, didReceiveMessage message: PNMessageResult) {
-        let channel = message.data.channel
+ //       let channel = message.data.channel
         // Handle new message stored in message.data.message
         if message.data.channel != message.data.subscription {
             
@@ -99,27 +101,30 @@ class ChatViewController: UIViewController, PNObjectEventListener {
             
             // Message has been received on channel stored in message.data.channel.
         }
-        if let messageData = message.data.message {
+        if let messageData = message.data.message as? NSDictionary {
             var postDateStr: String = ""
             let uuid = message.uuid
             var userName : String = ""
-            if let userNameFromId = userList?.getUserNameByUUID(uuid: uuid) {
-                userName = userNameFromId
-            }
+
             if let timeToken : Double = message.data.timetoken as Double? {
                 let timeSince1970 = timeToken / 10000000
                 let timeInterval : TimeInterval = TimeInterval(timeSince1970)
                 let postDate = Date(timeIntervalSince1970: timeInterval)
                 postDateStr = outDateFormatter.string(from: postDate)
             }
-            let newMessage : String = userName + " at " + postDateStr + " said:\n" + String(describing:messageData)
-            if (!firstPost) {
-                self.conversationView.text = self.conversationView.text + "\n"
+            if let messageContent : String = messageData[Constants.PubNubKeys.Contents] as? String {
+                if let userNameFromMessage = messageData[Constants.PubNubKeys.UserName] as? String {
+                    userName = userNameFromMessage + " "
+                }
+                let newMessage : String = userName + "at " + postDateStr + " said:\n" + messageContent
+                if (!firstPost) {
+                    self.conversationView.text = self.conversationView.text + "\n"
+                }
+                self.conversationView.text = self.conversationView.text + newMessage
+                print("Received message: \(newMessage) on channel '\(message.data.channel)' " +
+                    "at \(postDateStr)")
+                firstPost = false
             }
-            self.conversationView.text = self.conversationView.text + newMessage
-            firstPost = false
-            print("Received message: \(newMessage) on channel '\(message.data.channel)' " +
-                "at \(postDateStr)")
         }
     }
     
@@ -157,5 +162,20 @@ class ChatViewController: UIViewController, PNObjectEventListener {
         }
     }
 
+    // MARK: Text Field
+
+    // Handle Return dismiss keyboard by resignFirstResponder on the textfield
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    // dismiss editing whenever user touches oustide of edit field
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let _ = touches.first {
+            self.view.endEditing(true)
+        }
+        super.touchesBegan(touches, with: event)
+    }
 }
 

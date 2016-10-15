@@ -11,5 +11,6 @@ import UIKit
 struct Constants {
     struct PubNubKeys {
         static let UserName = "UserName"
+        static let Contents = "Contents"
     }
 }

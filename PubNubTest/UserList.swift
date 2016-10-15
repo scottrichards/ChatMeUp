@@ -18,8 +18,10 @@ class UserList: NSObject {
     }
     
     func addUserByUUID(uuid:String) {
-        pubNubClient.getUserName(onSuccess: {userName in
+        print("uuid: \(uuid)")
+        pubNubClient.getUserNameForUUID(uuid:uuid, onSuccess: {userName in
             self.users[uuid] = userName
+            print("updated userlist: \(self.users)")
             }, onError: {})
     }
     

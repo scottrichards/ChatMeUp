@@ -10,6 +10,5 @@ import UIKit
 
 class AppState: NSObject {
     var currentRoom : String = "Lobby"
-    var userName : String?
-    var setUserName : Bool = false
+    var currentUserName : String?
 }

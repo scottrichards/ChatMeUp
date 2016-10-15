@@ -39,6 +39,7 @@ class SettingsController: UIViewController, PNObjectEventListener {
     
     func updateUserName(userName:String) {
         self.appDelegate!.client.setUserName(userName: userName, onSuccess: {
+            self.appDelegate?.appState.currentUserName = userName
             self.userNameField.resignFirstResponder()
             self.navigationController?.popViewController(animated: true)
         })
