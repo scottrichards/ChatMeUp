@@ -15,8 +15,8 @@ class ChatViewController: UIViewController, PNObjectEventListener, UITextFieldDe
     @IBOutlet weak var userNameButton: UIButton!
     var appDelegate : AppDelegate?
     var outDateFormatter : DateFormatter = DateFormatter()
-    var firstPost : Bool = true
-    var userList : UserList?
+    var firstPost : Bool = true // true for first post used for formatting conversation output
+    var userList : UserList?    // list of user names indexed by uuid
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +35,7 @@ class ChatViewController: UIViewController, PNObjectEventListener, UITextFieldDe
         super.viewWillAppear(animated)
         var currentRoom : String = ""
         currentRoom = (appDelegate?.appState.currentRoom)!
+        // get user name if it fails then we will segue to user settings screen to supply a user name
         appDelegate!.client.getUserName(channel:currentRoom,
                                         onSuccess: {userName in
                                             self.title = userName
@@ -62,13 +63,16 @@ class ChatViewController: UIViewController, PNObjectEventListener, UITextFieldDe
         
     }
     
+    // post a message via pubNub
     func postMessage(message:String) {
         // Select last object from list of channels and send message to it.
         let targetChannel = appDelegate!.client.channels().last!
         var messageDictionary = [Constants.PubNubKeys.Contents : message]
         messageDictionary[Constants.PubNubKeys.UserName] = appDelegate?.appState.currentUserName
-        appDelegate!.client.publish(messageDictionary, toChannel: targetChannel,
-                                    compressed: false, withCompletion: { (publishStatus) -> Void in
+        appDelegate!.client.publish(messageDictionary,
+                                    toChannel: targetChannel,
+                                    compressed: false,
+                                    withCompletion: { (publishStatus) -> Void in
                                         
                                         if !publishStatus.isError {
                                             
@@ -129,7 +133,7 @@ class ChatViewController: UIViewController, PNObjectEventListener, UITextFieldDe
         }
     }
     
-    // Presence event handling.
+    // Presence event changes form Pub Nub
     func client(_ client: PubNub, didReceivePresenceEvent event: PNPresenceEventResult) {
         var currentRoom : String = ""
         currentRoom = (appDelegate?.appState.currentRoom)!
