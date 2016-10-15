@@ -9,7 +9,7 @@
 import UIKit
 import PubNub
 
-class SettingsController: UIViewController, PNObjectEventListener {
+class SettingsController: UIViewController, PNObjectEventListener, UITextFieldDelegate {
     @IBOutlet weak var userNameField: UITextField!
 
     var appDelegate : AppDelegate?
@@ -18,9 +18,12 @@ class SettingsController: UIViewController, PNObjectEventListener {
         super.viewDidLoad()
         self.appDelegate = UIApplication.shared.delegate as? AppDelegate
         self.appDelegate!.client.addListener(self)
-        self.appDelegate!.client.getUserName( onSuccess: { userName in
-            self.userNameField.text = userName
-            self.userNameField.resignFirstResponder()
+        var currentRoom : String = ""
+        currentRoom = (appDelegate?.appState.currentRoom)!
+        self.appDelegate!.client.getUserName( channel: currentRoom,
+                                              onSuccess: { userName in
+                                                self.userNameField.text = userName
+                                                self.userNameField.resignFirstResponder()
             }, onError: {}
         )
     }
@@ -30,29 +33,46 @@ class SettingsController: UIViewController, PNObjectEventListener {
         // Dispose of any resources that can be recreated.
     }
     
-
+    // invoked whne user clicks update to update the user name
+    func updateUserName(userName:String) {
+        var currentRoom : String = ""
+        currentRoom = (appDelegate?.appState.currentRoom)!
+        self.appDelegate!.client.setUserName(userName: userName, channel: currentRoom,
+                                             onSuccess: {
+                                                self.appDelegate?.appState.currentUserName = userName
+                                                self.userNameField.resignFirstResponder()
+                                                self.navigationController?.popViewController(animated: true)
+        })
+    }
+    
+    // --------------------------------
+    // MARK: - Actions
+    // --------------------------------
+    
+    
     @IBAction func updateSettings(_ sender: AnyObject) {
         if let userName = userNameField.text {
             updateUserName(userName: userName)
         }
     }
     
-    func updateUserName(userName:String) {
-        self.appDelegate!.client.setUserName(userName: userName, onSuccess: {
-            self.appDelegate?.appState.currentUserName = userName
-            self.userNameField.resignFirstResponder()
-            self.navigationController?.popViewController(animated: true)
-        })
-    }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    // --------------------------------
+    // MARK: - Text Field Handling
+    // --------------------------------
+    
+    // Handle Return dismiss keyboard by resignFirstResponder on the textfield
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
-    */
+    
+    // dismiss editing whenever user touches oustide of edit field
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let _ = touches.first {
+            self.view.endEditing(true)
+        }
+        super.touchesBegan(touches, with: event)
+    }
 
 }

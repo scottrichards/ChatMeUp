@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
         let configuration = PNConfiguration(publishKey: "pub-c-02f6dfe1-dc7e-4556-b235-1537b1fd790a", subscribeKey: "sub-c-aeafbae4-9188-11e6-8c91-02ee2ddab7fe")
         configuration.isTLSEnabled = true
         self.client = PubNub.clientWithConfiguration(configuration)
-        self.client.subscribeToChannels(["cycling"], withPresence: true)
+        self.client.subscribeToChannels([appState.currentRoom], withPresence: true)
         self.client.addListener(self)
     }
 

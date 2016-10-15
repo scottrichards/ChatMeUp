@@ -15,7 +15,6 @@ class ChatViewController: UIViewController, PNObjectEventListener, UITextFieldDe
     @IBOutlet weak var userNameButton: UIButton!
     var appDelegate : AppDelegate?
     var outDateFormatter : DateFormatter = DateFormatter()
-    var currentChannel : String = "cycling"
     var firstPost : Bool = true
     var userList : UserList?
     
@@ -34,15 +33,17 @@ class ChatViewController: UIViewController, PNObjectEventListener, UITextFieldDe
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        appDelegate!.client.getUserName(
-            onSuccess: {userName in
-                self.title = userName
-                if (userName.isEmpty) {
-                    self.performSegue(withIdentifier: "userSettings", sender: self)
-                } else {
-                    self.userNameButton.setTitle(userName, for: .normal)
-                    print("Hello, \(userName)")
-                }
+        var currentRoom : String = ""
+        currentRoom = (appDelegate?.appState.currentRoom)!
+        appDelegate!.client.getUserName(channel:currentRoom,
+                                        onSuccess: {userName in
+                                            self.title = userName
+                                            if (userName.isEmpty) {
+                                                self.performSegue(withIdentifier: "userSettings", sender: self)
+                                            } else {
+                                                self.userNameButton.setTitle(userName, for: .normal)
+                                                print("Hello, \(userName)")
+                                            }
             }, onError: {
                 self.userNameButton.setTitle("Log In...", for: .normal)
                 self.performSegue(withIdentifier: "userSettings", sender: self)
@@ -91,7 +92,7 @@ class ChatViewController: UIViewController, PNObjectEventListener, UITextFieldDe
 
     // Handle new message from one of channels on which client has been subscribed.
     func client(_ client: PubNub, didReceiveMessage message: PNMessageResult) {
- //       let channel = message.data.channel
+        let channel = message.data.channel
         // Handle new message stored in message.data.message
         if message.data.channel != message.data.subscription {
             
@@ -103,7 +104,7 @@ class ChatViewController: UIViewController, PNObjectEventListener, UITextFieldDe
         }
         if let messageData = message.data.message as? NSDictionary {
             var postDateStr: String = ""
-            let uuid = message.uuid
+//            let uuid = message.uuid
             var userName : String = ""
 
             if let timeToken : Double = message.data.timetoken as Double? {
@@ -128,9 +129,10 @@ class ChatViewController: UIViewController, PNObjectEventListener, UITextFieldDe
         }
     }
     
-    // New presence event handling.
+    // Presence event handling.
     func client(_ client: PubNub, didReceivePresenceEvent event: PNPresenceEventResult) {
-        
+        var currentRoom : String = ""
+        currentRoom = (appDelegate?.appState.currentRoom)!
         // Handle presence event event.data.presenceEvent (one of: join, leave, timeout, state-change).
         if event.data.channel != event.data.subscription {
             
@@ -144,7 +146,7 @@ class ChatViewController: UIViewController, PNObjectEventListener, UITextFieldDe
         if event.data.presenceEvent != "state-change" {
             if (event.data.presenceEvent == "join") {   // if user joined then add user id
                 if let uuid = event.data.presence.uuid {
-                    userList?.addUserByUUID(uuid: uuid)
+                    userList?.addUserByUUID(uuid: uuid, channel: currentRoom)
                 }
             }
             print("\(event.data.presence.uuid) \"\(event.data.presenceEvent)'ed\"\n" +
@@ -157,7 +159,7 @@ class ChatViewController: UIViewController, PNObjectEventListener, UITextFieldDe
                 "\(event.data.presence.timetoken) on \(event.data.channel) to:\n" +
                 "\(event.data.presence.state)");
             if let uuid = event.data.presence.uuid {
-                userList?.addUserByUUID(uuid: uuid)
+                userList?.addUserByUUID(uuid: uuid, channel: currentRoom)
             }
         }
     }

@@ -17,9 +17,9 @@ class UserList: NSObject {
         self.pubNubClient = client
     }
     
-    func addUserByUUID(uuid:String) {
+    func addUserByUUID(uuid:String, channel: String) {
         print("uuid: \(uuid)")
-        pubNubClient.getUserNameForUUID(uuid:uuid, onSuccess: {userName in
+        pubNubClient.getUserNameForUUID(uuid:uuid, channel: channel, onSuccess: {userName in
             self.users[uuid] = userName
             print("updated userlist: \(self.users)")
             }, onError: {})
